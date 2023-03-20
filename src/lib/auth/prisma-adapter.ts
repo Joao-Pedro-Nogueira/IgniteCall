@@ -12,7 +12,7 @@ export function PrismaAdapter(
       const { '@ignitecall:userId': userIdOnCookies } = parseCookies({ req })
 
       if (!userIdOnCookies) {
-        throw new Error('User id not found on cookies')
+        throw new Error('User ID not found on cookies.')
       }
 
       const prismaUser = await prisma.user.update({
@@ -35,8 +35,8 @@ export function PrismaAdapter(
         name: prismaUser.name,
         username: prismaUser.username,
         email: prismaUser.email!,
-        avatar_url: prismaUser.avatar_url!,
         emailVerified: null,
+        avatar_url: prismaUser.avatar_url!,
       }
     },
 
@@ -56,8 +56,8 @@ export function PrismaAdapter(
         name: user.name,
         username: user.username,
         email: user.email!,
-        avatar_url: user.avatar_url!,
         emailVerified: null,
+        avatar_url: user.avatar_url!,
       }
     },
     async getUserByEmail(email) {
@@ -76,8 +76,8 @@ export function PrismaAdapter(
         name: user.name,
         username: user.username,
         email: user.email!,
-        avatar_url: user.avatar_url!,
         emailVerified: null,
+        avatar_url: user.avatar_url!,
       }
     },
     async getUserByAccount({ providerAccountId, provider }) {
@@ -104,15 +104,15 @@ export function PrismaAdapter(
         name: user.name,
         username: user.username,
         email: user.email!,
-        avatar_url: user.avatar_url!,
         emailVerified: null,
+        avatar_url: user.avatar_url!,
       }
     },
 
     async updateUser(user) {
       const prismaUser = await prisma.user.update({
         where: {
-          id: user.id,
+          id: user.id!,
         },
         data: {
           name: user.name,
@@ -126,8 +126,8 @@ export function PrismaAdapter(
         name: prismaUser.name,
         username: prismaUser.username,
         email: prismaUser.email!,
-        avatar_url: prismaUser.avatar_url!,
         emailVerified: null,
+        avatar_url: prismaUser.avatar_url!,
       }
     },
 
@@ -138,6 +138,7 @@ export function PrismaAdapter(
           type: account.type,
           provider: account.provider,
           provider_account_id: account.providerAccountId,
+          refresh_token: account.refresh_token,
           access_token: account.access_token,
           expires_at: account.expires_at,
           token_type: account.token_type,
@@ -182,17 +183,17 @@ export function PrismaAdapter(
 
       return {
         session: {
+          userId: session.user_id,
           expires: session.expires,
           sessionToken: session.session_token,
-          userId: session.user_id,
         },
         user: {
           id: user.id,
           name: user.name,
           username: user.username,
           email: user.email!,
-          avatar_url: user.avatar_url!,
           emailVerified: null,
+          avatar_url: user.avatar_url!,
         },
       }
     },
